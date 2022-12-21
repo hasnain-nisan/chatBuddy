@@ -14,7 +14,7 @@ const Room = () => {
     );
 
     const scrollToBottom = () => {
-      setInterval(() => {
+      setTimeout(() => {
         var objDiv = document.getElementById("mesgContainer");
         objDiv.scrollTo({ top: objDiv.scrollHeight, behavior: 'smooth' })
         // objDiv.scrollTop = objDiv.scrollHeight;

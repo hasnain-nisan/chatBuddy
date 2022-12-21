@@ -7,13 +7,16 @@ import { supabase } from "../../utils/supabase/supabaseClient";
 const Input = () => {
     const [message, setMessage] = useState("");
     const user = useSelector((state) => state.authData.session);
+    const selected_room = useSelector(
+        (state) => state.conversationData.selected_room
+    );
 
     const sendMessage = async () => {
         const msg = {
             'id': uuidv4(),
             'message': message,
             'sender_id': user.user.id,
-            'room_id': "614132cb-0dcc-4fe2-9813-e68f85199755",
+            'room_id': selected_room.id,
             'created_at': moment().format(),
         };
         const { error } = await supabase.from("messages").insert(msg);   
