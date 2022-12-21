@@ -8,9 +8,18 @@ import Message from './Message';
 const Room = () => {
 
     const [messages, setMessages] = useState([]);
+    const user = useSelector((state) => state.authData.session);
     const selected_room = useSelector(
       (state) => state.conversationData.selected_room
     );
+
+    const scrollToBottom = () => {
+      setInterval(() => {
+        var objDiv = document.getElementById("mesgContainer");
+        objDiv.scrollTo({ top: objDiv.scrollHeight, behavior: 'smooth' })
+        // objDiv.scrollTop = objDiv.scrollHeight;
+      }, 1000)
+    }
 
     const getRoomMessages = async (e) => {
       const { data, error } = await supabase
@@ -31,13 +40,34 @@ const Room = () => {
       setMessages(data)
     };
 
+    const channel = supabase.channel("db-messages");
+    const roomId = selected_room?.id;
+    const userId = user.id;
+
+    channel.on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "messages",
+        filter: `room_id=eq.${roomId}`,
+      },
+      (payload) => {
+        setMessages([...messages, payload.new]);
+        scrollToBottom();
+      }
+    );
+
+    channel.subscribe();
+
     useEffect(() => {
         getRoomMessages();
+        scrollToBottom();
     }, [])
 
     return (
-        <div class="flex flex-col h-full overflow-x-auto">
-            <div class="flex flex-col h-full">
+        <div class="flex flex-col h-full">
+            <div class="flex flex-col h-full overflow-x-auto" id="mesgContainer">
                 <div class="grid grid-cols-12 gap-y-2">
                     {messages.map((message) => {
                         return <Message msg={message}/>

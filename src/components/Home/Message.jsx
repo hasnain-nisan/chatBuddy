@@ -9,32 +9,6 @@ const Message = ({msg}) => {
     );
     const user_id = user?.user?.id;
 
-    const channel = supabase.channel("db-messages");
-    const roomId = selected_room?.id;
-    const userId = user_id;
-
-    channel.on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "messages",
-        filter: `room_id=eq.${roomId}`,
-      },
-      (payload) => console.log(payload)
-    );
-
-    channel.subscribe(async (status) => {
-      if (status === "SUBSCRIBED") {
-        const res = await supabase.from("messages").insert({
-          room_id: roomId,
-          user_id: userId,
-          message: "Welcome to Realtime!",
-        });
-        console.log(res);
-      }
-    });
-
     return (
       <>
         {msg.sender_id === user_id ? (

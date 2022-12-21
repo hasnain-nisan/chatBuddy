@@ -16,11 +16,12 @@ const Input = () => {
             'room_id': "614132cb-0dcc-4fe2-9813-e68f85199755",
             'created_at': moment().format(),
         };
-        const { error } = await supabase.from("messages").insert(msg);    
+        const { error } = await supabase.from("messages").insert(msg);   
+        setMessage("") 
     };
 
     return (
-        <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+        <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4 z-20">
             <div>
                 <button class="flex items-center justify-center text-gray-400 hover:text-gray-600">
                 <svg
