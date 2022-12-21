@@ -12,4 +12,9 @@ const getSession = async (e) => {
     }
 };
 
-export { getUser, getSession };
+  const signOut = async (e) => {
+    // e.preventDefault();
+    const { error } = await supabase.auth.signOut();
+  };
+
+export { getUser, getSession, signOut };

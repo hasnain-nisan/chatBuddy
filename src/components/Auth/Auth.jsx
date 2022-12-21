@@ -1,14 +1,12 @@
 import React, {useState} from 'react'
 import { supabase } from '../../utils/supabase/supabaseClient';
-import { login } from '../../redux/actions/authAction';
+import { auth } from '../../redux/actions/authAction';
 import Logo from '../../assets/chatbuddy.png'
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [formState, setFormState] = useState('login');
   const [userName, setUserName] = useState("");
@@ -32,9 +30,7 @@ const Auth = () => {
     if(error){
       console.log(error.message);
     } else {
-      console.log(data);
-      dispatch(login(data));
-      navigate('/home');
+      dispatch(auth(data.session));
     }
   }
 
@@ -49,12 +45,12 @@ const Auth = () => {
         },
       },
     });
-    console.log(data, error);
-  }
-
-  const signOut = async (e) => {
-    // e.preventDefault();
-    const { error } = await supabase.auth.signOut();
+    
+    if (error) {
+      console.log(error.message);
+    } else {
+      dispatch(auth(data.session));
+    }
   }
 
   return (

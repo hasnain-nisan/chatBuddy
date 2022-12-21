@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, getSession } from '../../utils/supabase/supaBaseHelper'
 import MessageContainer from './MessageContainer';
@@ -7,14 +6,12 @@ import Sidebar from './Sidebar';
 
 const Home = () => {
 
-  const navigate = useNavigate();
   const currentUser = useSelector((state) => state.authData.user);
   const [user, setUser] = useState(null);
 
   const getCurrentUser = async () => {
     let user = await getUser();
     if(user) setUser(user);
-    else navigate("/");
   };
 
   const getCurrentSession = async () => {

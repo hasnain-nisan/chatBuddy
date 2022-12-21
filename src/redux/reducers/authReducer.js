@@ -1,7 +1,6 @@
 const authReducer = (
   authData = {
-    user: null,
-    session: null
+    session: null,
   },
   action
 ) => {
@@ -9,15 +8,7 @@ const authReducer = (
     case 'AUTH':
       return {
         ...authData,
-        user: action.payload.user,
-        session: action.payload.session,
-      };
-    case 'LOGOUT':
-      window.localStorage.removeItem("accessToken");
-      return {
-        ...authData,
-        user: null,
-        accessToken: null,
+        session: action.payload,
       };
     default:
       return authData;
