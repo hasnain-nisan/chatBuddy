@@ -16,8 +16,7 @@ const Input = () => {
             'room_id': "614132cb-0dcc-4fe2-9813-e68f85199755",
             'created_at': moment().format(),
         };
-        const { error } = await supabase.from("messages").insert(msg);
-        
+        const { error } = await supabase.from("messages").insert(msg);    
     };
 
     return (

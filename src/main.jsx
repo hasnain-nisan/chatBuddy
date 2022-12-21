@@ -10,6 +10,7 @@ import Auth from './components/Auth/Auth';
 import NotFound from './components/NotFound/NotFound';
 import './index.css'
 import Home from './components/Home/Home';
+import conversationReducer from './redux/reducers/conversationReducer';
 
 // const router = createBrowserRouter([
 //   {
@@ -28,6 +29,7 @@ const store = configureStore(
   {
     reducer: {
       authData: authReducer,
+      conversationData: conversationReducer
     }
   },
   devToolsEnhancer()

@@ -4,12 +4,14 @@ import { RxDragHandleDots2 } from "react-icons/rx";
 import {ImBullhorn} from 'react-icons/im'
 import {IoMdLogOut} from 'react-icons/io'
 import { supabase } from '../../utils/supabase/supabaseClient';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { auth } from '../../redux/actions/authAction';
+import { setSelectedRoom } from '../../redux/actions/conversationAction';
 
 const Sidebar = () => {
 
   const dispatch = useDispatch();
+  const public_rooms = useSelector((state) => state.conversationData.public_rooms);
   const signOut = async (e) => {
     const { error } = await supabase.auth.signOut();
     dispatch(auth(null))
@@ -21,14 +23,19 @@ const Sidebar = () => {
         <img src={Logo} width="200" alt="" srcSet="" />
       </div>
       <div class="flex flex-col mt-28">
-        <div class="flex flex-col space-y-1 mt-4 -mx-2">
-          <button class="flex flex-row gap-3 items-center hover:bg-gray-200 rounded-xl p-2">
-            <div class="flex items-center justify-center h-10 w-10 bg-indigo-200 rounded-full">
-              <ImBullhorn fontSize={20} />
+        <p className='text-2xl font-semibold tracking-[2px]'>Public rooms</p>
+        {public_rooms?.map((p_room) => {
+          return (
+            <div class="flex flex-col space-y-1 mt-4 -mx-2" onClick={() => dispatch(setSelectedRoom(p_room))}>
+              <button class="flex flex-row gap-3 items-center hover:bg-gray-200 rounded-xl p-2">
+                <div class="flex items-center justify-center h-10 w-10 bg-indigo-200 rounded-full">
+                  <ImBullhorn fontSize={20} />
+                </div>
+                <div class="text-xl font-semibold">{p_room.name}</div>
+              </button>
             </div>
-            <div class="text-xl font-semibold">Shout Box</div>
-          </button>
-        </div>
+          );
+        })}
       </div>
       <div className="w-1/4 min-w-[250px] max-w-[500px] flex justify-between items-center gap-2 absolute bottom-10">
         <div className="flex gap-3 justify-center items-center">
