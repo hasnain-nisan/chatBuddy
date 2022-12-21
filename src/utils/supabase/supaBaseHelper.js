@@ -12,9 +12,15 @@ const getSession = async (e) => {
     }
 };
 
-  const signOut = async (e) => {
-    // e.preventDefault();
-    const { error } = await supabase.auth.signOut();
-  };
+const signOut = async (e) => {
+// e.preventDefault();
+const { error } = await supabase.auth.signOut();
+};
+
+const createRoom = async (data) => {
+    const {error} = await supabase
+        .from('rooms')
+        .insert(data)
+};
 
 export { getUser, getSession, signOut };
