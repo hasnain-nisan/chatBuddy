@@ -27,7 +27,7 @@ const Home = () => {
   }, [])
 
   return (
-    <div className="bg-[#252331] h-full px-5 overflow-y-hidden">
+    <div className="h-full px-5 overflow-y-hidden">
       {/* header */}
       <div id='header' className="flex justify-between items-center py-5 z-10">
         <h1 className="text-2xl text-teal-400 font-semibold font-popins">
