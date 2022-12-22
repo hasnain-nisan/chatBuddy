@@ -53,7 +53,7 @@ const Home = () => {
       </div>
 
       {/* messages */}
-      <div id='msgContainer' className='flex flex-col gap-3 pb-5 overflow-y-auto'>
+      <div id='msgContainer' className='flex flex-col gap-2 pb-5 overflow-y-auto'>
         {messages.map((message) => {
           return (
             <div class="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50 cursor-pointer">
