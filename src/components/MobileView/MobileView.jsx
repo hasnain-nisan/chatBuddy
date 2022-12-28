@@ -9,7 +9,7 @@ const MobileView = () => {
   const [isConverSation, setIsConversation] = useState(false);
 
   return (
-    <div className="w-full h-screen bg-[#252331]">
+    <div className="w-full h-screen bg-[#252331] block md:hidden">
       {!isConverSation ? (
         <>
           {menu === "home" && (

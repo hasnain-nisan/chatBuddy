@@ -88,7 +88,10 @@ const MessageContainer = () => {
       }, []);
 
     return (
-      <div id="msgContainer" className="flex flex-col gap-2 overflow-y-scroll">
+      <div
+        id="msgContainer"
+        className="flex flex-col gap-2 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C]"
+      >
         {msgs.map((msg) => {
           return <Message side={msg.side} />;
         })}

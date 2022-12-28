@@ -30,7 +30,7 @@ const Home = (props) => {
   return (
     <div className="h-full px-5 overflow-y-hidden">
       {/* header */}
-      <div id='header' className="flex justify-between items-center py-5 z-10">
+      <div id="header" className="flex justify-between items-center py-5 z-10">
         <h1 className="text-2xl text-teal-400 font-semibold font-popins">
           Home
         </h1>
@@ -38,7 +38,7 @@ const Home = (props) => {
       </div>
 
       {/* searchBar */}
-      <div id='search' class="max-w-md mx-auto mb-3">
+      <div id="search" class="mx-auto mb-3">
         <div class="relative flex items-center w-full h-12 rounded-lg bg-[#1E1C26] overflow-hidden">
           <div class="grid place-items-center h-full w-12 text-teal-700">
             <MdSearch fontSize={18} />
@@ -54,7 +54,10 @@ const Home = (props) => {
       </div>
 
       {/* messages */}
-      <div id='msgContainer' className='flex flex-col gap-2 pb-5 overflow-y-auto'>
+      <div
+        id="msgContainer"
+        className="flex flex-col gap-2 pb-5 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C]"
+      >
         {messages.map((message) => {
           return (
             <div

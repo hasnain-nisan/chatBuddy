@@ -6,7 +6,7 @@ import Sidebar from './Sidebar'
 
 const DesktopView = () => {
   return (
-    <div className="w-full h-screen flex bg-[#211F2C]">
+    <div className="w-full h-screen bg-[#211F2C] hidden md:flex">
       <Sidebar />
       <MenuContainer/>
     </div>

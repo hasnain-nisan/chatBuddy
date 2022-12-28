@@ -35,7 +35,7 @@ function App() {
   return (
     <div>
       {/* {user ? <Home/> : <Auth/>} */}
-      {/* <MobileView/> */}
+      <MobileView/>
       <DesktopView/>
     </div>
   )
