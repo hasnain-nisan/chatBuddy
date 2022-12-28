@@ -6,6 +6,7 @@ import Home from './components/Home/Home'
 import { auth } from './redux/actions/authAction'
 import { getPublicRooms } from './redux/actions/conversationAction'
 import MobileView from './components/MobileView/MobileView'
+import DesktopView from './components/DesktopView/DesktopView'
 
 function App() {
 
@@ -34,7 +35,8 @@ function App() {
   return (
     <div>
       {/* {user ? <Home/> : <Auth/>} */}
-      <MobileView/>
+      {/* <MobileView/> */}
+      <DesktopView/>
     </div>
   )
 }

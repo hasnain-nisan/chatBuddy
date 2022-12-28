@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        popins: ['Poppins', 'sans-serif'],
-        roboto: ['Roboto Slab', 'serif']
+        popins: ["Poppins", "sans-serif"],
+        roboto: ["Roboto Slab", "serif"],
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
