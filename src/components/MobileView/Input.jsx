@@ -17,7 +17,7 @@ const Input = () => {
           placeholder="Type something.."
           autocomplete="off"
         />
-        <div class="flex justify-between items-center h-full w-20 text-teal-700">
+        <div class="flex justify-between items-center h-full w-20 text-teal-700 pr-2">
           <MdEmojiEmotions fontSize={18} />
           <HiOutlinePaperClip fontSize={18} />
           <RiSendPlaneFill  fontSize={18}/>

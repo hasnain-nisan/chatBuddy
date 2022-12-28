@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { GoSettings } from "react-icons/go";
 import {MdSearch} from 'react-icons/md'
 
-const Home = () => {
+const Home = (props) => {
 
   const messages = [1,1,1,1,1,2,3,3,1,34,4];
+  const setIsConversation = props.setIsConversation;
 
   const setMsgContainerHeight = () => {
         var windowHeight = window.innerHeight;
@@ -56,7 +57,10 @@ const Home = () => {
       <div id='msgContainer' className='flex flex-col gap-2 pb-5 overflow-y-auto'>
         {messages.map((message) => {
           return (
-            <div class="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50 cursor-pointer">
+            <div
+              class="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50 cursor-pointer"
+              onClick={() => setIsConversation(true)}
+            >
               <div class="flex justify-start items-center gap-3">
                 <img
                   class="rounded-full items-start flex-shrink-0 object-cover"

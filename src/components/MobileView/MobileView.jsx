@@ -6,12 +6,22 @@ import Home from './Home'
 const MobileView = () => {
 
   const [menu, setMenu] = useState('home')
+  const [isConverSation, setIsConversation] = useState(false);
 
   return (
     <div className="w-full h-screen bg-[#252331]">
-      {/* {menu === 'home' && <Home/>}
-      <BottomNavigationBar menu={menu} setMenu={setMenu}/> */}
-      <Conversation />
+      {!isConverSation ? (
+        <>
+          {menu === "home" && (
+            <>
+              <Home setIsConversation={setIsConversation} />
+              <BottomNavigationBar menu={menu} setMenu={setMenu} />
+            </>
+          )}
+        </>
+      ) : (
+        <Conversation setIsConversation={setIsConversation} />
+      )}
     </div>
   );
 }
