@@ -70,7 +70,7 @@ const Home = (props) => {
                   alt="Marie Zulfikar"
                 />
                 <div>
-                  <h4 class="text-[15px] font-semibold font-poppins text-teal-500">
+                  <h4 class="text-[15px] font-semibold font-popins text-teal-500">
                     Marie Zulfikar
                   </h4>
                   <div class="text-[11px] text-teal-700 font-popins">

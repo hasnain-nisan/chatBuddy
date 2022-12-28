@@ -7,9 +7,9 @@ const Input = () => {
   return (
     <section
       id="bottom-navigation"
-      className="block fixed inset-x-0 bottom-3 mx-5 z-10 bg-[#1E1D26] shadow p-2 rounded-md"
+      className="block fixed inset-x-0 bottom-0 z-10 bg-[#252331] shadow px-5 py-3"
     >
-      <div class="relative flex justify-between items-center w-full h-6 rounded-lg bg-[#1E1C26] overflow-hidden">
+      <div class="relative flex justify-between items-center w-full h-10 px-4 rounded-lg bg-[#1E1C26] overflow-hidden">
         <input
           class="peer h-full w-3/5 outline-none text-sm text-teal-700 pl-3 bg-[#1E1C26] placeholder:text-teal-700 placeholder:text-sm"
           type="text"

@@ -37,6 +37,16 @@ const MessageContainer = () => {
       {
         id: 1,
         message: "heloo",
+        side: "left",
+      },
+      {
+        id: 1,
+        message: "heloo",
+        side: "left",
+      },
+      {
+        id: 1,
+        message: "heloo",
         side: "right",
       },
       {
@@ -64,17 +74,13 @@ const MessageContainer = () => {
       const setMsgContainerHeight = () => {
         var windowHeight = window.innerHeight;
         var bodyHeight = document.getElementsByTagName("body")[0].clientHeight;
-        console.log(bodyHeight, windowHeight);
         var bottomNavigationHeight =
           document.getElementById("bottom-navigation").clientHeight;
         var headerHeight = document.getElementById("header").clientHeight;
-        var searchHeight = document.getElementById("search").clientHeight;
         var msgContanerHeight =
-          bodyHeight - (bottomNavigationHeight + headerHeight + searchHeight);
+          bodyHeight - (bottomNavigationHeight + headerHeight);
         document.getElementById("msgContainer").style.height =
           msgContanerHeight + "px";
-
-        console.log(msgContanerHeight);
       };
 
       useEffect(() => {
