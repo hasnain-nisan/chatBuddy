@@ -1,6 +1,7 @@
 const conversationReducer = (
   conversationData = {
     public_rooms: null,
+    private_rooms: null,
     selected_room: null
   },
   action
@@ -10,6 +11,11 @@ const conversationReducer = (
       return {
         ...conversationData,
         public_rooms: action.payload,
+      };
+    case "SET_PRIVATE_ROOMS":
+      return {
+        ...conversationData,
+        private_rooms: action.payload,
       };
     case "SET_SELECTED_ROOM":
       return {

@@ -11,6 +11,7 @@ import NotFound from './components/NotFound/NotFound';
 import './index.css'
 import Home from './components/Home/Home';
 import conversationReducer from './redux/reducers/conversationReducer';
+import menuReducer from './redux/reducers/menuReducers';
 
 // const router = createBrowserRouter([
 //   {
@@ -29,7 +30,8 @@ const store = configureStore(
   {
     reducer: {
       authData: authReducer,
-      conversationData: conversationReducer
+      conversationData: conversationReducer,
+      menuData: menuReducer,
     }
   },
   devToolsEnhancer()

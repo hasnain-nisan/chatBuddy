@@ -2,13 +2,25 @@ import React from 'react'
 import { IoLogoIonitron } from "react-icons/io";
 import { HiOutlineHome, HiUserGroup, HiChatAlt, HiMenu } from "react-icons/hi";
 import { BiLogOut } from "react-icons/bi";
+import { useDispatch } from 'react-redux';
+import { supabase } from '../../utils/supabase/supabaseClient';
+import { auth } from '../../redux/actions/authAction';
+import { setMenu } from '../../redux/actions/menuAction';
 
 const DrawerSidebar = () => {
+
+  const dispatch = useDispatch();
+  const signOut = async (e) => {
+    const { error } = await supabase.auth.signOut();
+    dispatch(auth(null));
+  };
+
+  const setSelectedMenu = (type) => {
+    dispatch(setMenu(type));
+  };
+
   return (
-    <aside
-      className="w-full h-full bg-[#252331]"
-      aria-label="Sidebar"
-    >
+    <aside className="w-full h-full bg-[#252331]" aria-label="Sidebar">
       <div className="flex flex-row gap-2 justify-center items-center p-5">
         <IoLogoIonitron fontSize={40} className="text-teal-400" />
         <h1 className="text-2xl font-popins font-bold text-teal-500">
@@ -50,6 +62,7 @@ const DrawerSidebar = () => {
               <a
                 href="#"
                 class="flex items-center p-2 font-normal text-slate-500 font-popins hover:bg-[#1E1C26] hover:text-teal-600 rounded-md"
+                onClick={() => setSelectedMenu("group")}
               >
                 <HiUserGroup />
                 <span class="ml-3">Group</span>
@@ -77,6 +90,7 @@ const DrawerSidebar = () => {
               <a
                 href="#"
                 class="flex items-center p-2 font-normal text-slate-500 font-popins hover:bg-[#1E1C26] hover:text-teal-600 rounded-md"
+                onClick={signOut}
               >
                 <BiLogOut />
                 <span class="ml-3">Logout</span>

@@ -1,7 +1,23 @@
 import React from 'react'
 import { HiOutlineHome, HiUserGroup, HiChatAlt, HiMenu } from "react-icons/hi";
+import { BiLogOut } from "react-icons/bi";
+import { useDispatch } from 'react-redux';
+import { supabase } from '../../utils/supabase/supabaseClient';
+import { auth } from '../../redux/actions/authAction';
+import { setMenu } from '../../redux/actions/menuAction';
 
 const BottomNavigationBar = () => {
+
+  const dispatch = useDispatch();
+  const signOut = async (e) => {
+    const { error } = await supabase.auth.signOut();
+    dispatch(auth(null));
+  };
+
+  const setSelectedMenu = (type) => {
+    dispatch(setMenu(type));
+  };
+
   return (
     <section
       id="bottom-navigation"
@@ -17,9 +33,10 @@ const BottomNavigationBar = () => {
         <a
           href="#"
           className="w-full text-teal-800 focus:text-teal-400 hover:text-teal-400 flex justify-center items-center text-center pt-2 pb-1"
+          onClick={() => setSelectedMenu("group")}
         >
           <HiUserGroup fontSize={22} className="inline-block mb-1" />
-        </a>
+        </a >
         <a
           href="#"
           className="w-full text-teal-800 focus:text-teal-400 hover:text-teal-400 flex justify-center items-center text-center pt-2 pb-1"
@@ -31,6 +48,13 @@ const BottomNavigationBar = () => {
           className="w-full text-teal-800 focus:text-teal-400 hover:text-teal-400 flex justify-center items-center text-center pt-2 pb-1"
         >
           <HiMenu fontSize={22} className="inline-block mb-1" />
+        </a>
+        <a
+          href="#"
+          className="w-full text-teal-800 focus:text-teal-400 hover:text-teal-400 flex justify-center items-center text-center pt-2 pb-1"
+          onClick={signOut}
+        >
+          <BiLogOut fontSize={22} className="inline-block mb-1" />
         </a>
       </div>
     </section>
