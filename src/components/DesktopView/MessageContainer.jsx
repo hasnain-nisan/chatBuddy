@@ -139,8 +139,10 @@ const MessageContainer = () => {
 
     ];
 
+     
+
     return (
-      <div className="w-2/3 h-full pb-1">
+      <div className="w-2/3 h-full pb-5">
         <div
           id="header"
           className="flex justify-between items-center p-4 mb-2 bg-[#1E1C26] rounded-md mt-1 h-12"

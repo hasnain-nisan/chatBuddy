@@ -4,7 +4,7 @@ import { MdSearch } from 'react-icons/md';
 const MessageBar = () => {
     const messages = [1, 1, 1, 1, 1, 2, 3, 3, 1, 34, 4, 3,3,3,3,3,3,3];
     return (
-      <div className="w-1/3 px-5 mt-1">
+      <div className="w-1/3 px-5 mt-1 mb-5">
         <div id="search" class="mx-auto mb-3">
           <div class="flex items-center w-full h-12 rounded-lg bg-[#1E1C26] overflow-hidden p-1">
             <div class="grid place-items-center h-full w-12 text-teal-700">

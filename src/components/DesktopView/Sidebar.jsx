@@ -5,7 +5,7 @@ import {BiLogOut} from 'react-icons/bi'
 
 const Sidebar = () => {
   return (
-    <aside className="w-1/5 h-full bg-[#252331]" aria-label="Sidebar">
+    <aside className="w-1/5 h-full bg-[#252331] hidden lg:block" aria-label="Sidebar">
       <div className="flex flex-row gap-2 justify-center items-center p-5">
         <IoLogoIonitron fontSize={40} className="text-teal-400" />
         <h1 className="text-2xl font-popins font-bold text-teal-500">
