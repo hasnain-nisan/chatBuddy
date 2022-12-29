@@ -1,4 +1,5 @@
 import React from 'react'
+import { BsPlusCircleFill } from 'react-icons/bs';
 import { GoSettings } from 'react-icons/go';
 import { MdSearch } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -42,34 +43,15 @@ const MessageBar = () => {
           id="msgContainer"
           className="flex flex-col gap-2 pb-5 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C]"
         >
-          {/* {messages.map((message) => {
-            return (
-                <div
-                class="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50 cursor-pointer"
-                onClick={() => setIsConversation(true)}
-                >
-                <div class="flex justify-start items-center gap-3">
-                    <img
-                    class="rounded-full items-start flex-shrink-0 object-cover"
-                    src="https://res.cloudinary.com/dc6deairt/image/upload/v1638102932/user-32-01_pfck4u.jpg"
-                    width="45"
-                    height="45"
-                    alt="Marie Zulfikar"
-                    />
-                    <div>
-                    <h4 class="text-[15px] font-semibold font-popins text-teal-500">
-                        Marie Zulfikar
-                    </h4>
-                    <div class="text-[11px] text-teal-700 font-popins">
-                        The video chat ended · 2hrs
-                    </div>
-                    </div>
-                </div>
-                </div>
-            );
-            })} */}
-          {menu === "group" && <Group/>}
+          {menu === "group" && <Group />}
         </div>
+
+        <button className="text-teal-500 fixed bottom-20 right-5 cursor-pointer">
+          <BsPlusCircleFill
+            fontSize={40}
+            className="shadow-md shadow-teal-500/50 rounded-full"
+          />
+        </button>
       </div>
     );
 }
