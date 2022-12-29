@@ -42,7 +42,7 @@ const Group = () => {
             padding: "0px",
           }}
         >
-          {publicRooms.map((room) => {
+          {publicRooms?.map((room) => {
             return <MenuMessage key={room.id} room={room}/>;
           })}
         </AccordionDetails>
@@ -73,7 +73,7 @@ const Group = () => {
             padding: "0px",
           }}
         >
-          {privateRooms.map((room) => {
+          {privateRooms?.map((room) => {
             return <MenuMessage key={room.id} room={room}/>;
           })}
         </AccordionDetails>

@@ -52,7 +52,6 @@ const Room = () => {
         filter: `room_id=eq.${roomId}`,
       },
       (payload) => {
-        console.log(payload); 
         setMessages([...messages, payload.new]);
         scrollToBottom();
       }

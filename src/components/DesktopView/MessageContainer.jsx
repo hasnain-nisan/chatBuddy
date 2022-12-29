@@ -230,7 +230,7 @@ const MessageContainer = () => {
               className="flex flex-col gap-3 overflow-y-scroll h-[90%] px-5 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C] pt-1"
             >
               {messages.map((msg) => {
-                return <Message key={msg.id} msg={msg}/>;
+                return <Message key={msg.id} msg={msg}/>
               })}
               <div id='bottomDivMessage'></div>
             </div>
