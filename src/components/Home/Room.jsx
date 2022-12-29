@@ -42,7 +42,6 @@ const Room = () => {
 
     const channel = supabase.channel("db-messages");
     const roomId = selected_room?.id;
-    const userId = user.id;
 
     channel.on(
       "postgres_changes",
@@ -53,6 +52,7 @@ const Room = () => {
         filter: `room_id=eq.${roomId}`,
       },
       (payload) => {
+        console.log(payload); 
         setMessages([...messages, payload.new]);
         scrollToBottom();
       }
