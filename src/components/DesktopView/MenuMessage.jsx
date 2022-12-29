@@ -24,7 +24,7 @@ const MenuMessage = ({room}) => {
             />
           ) : (
             <span className="text-2xl font-bold font-popins bg-slate-400 px-2 h-8 w-8 rounded-full flex items-center justify-center border border-teal-600">
-              <p>{room?.name.charAt(0)}</p>
+              <p className='uppercase'>{room?.name.charAt(0)}</p>
             </span>
           )}
           <div>

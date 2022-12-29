@@ -31,7 +31,7 @@ const Conversation = () => {
       document.getElementById("bottom-navigation").clientHeight;
     var headerHeight = document.getElementById("header").clientHeight;
     var msgContanerHeight =
-      bodyHeight - (bottomNavigationHeight + headerHeight + 60);
+      bodyHeight - (bottomNavigationHeight + headerHeight + 55);
     document.getElementById("msgContainer").style.height =
       msgContanerHeight + "px";
   };
@@ -51,6 +51,16 @@ const Conversation = () => {
     setMessages(data);
   };
 
+  const getMessageUserProfile = async (msg) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select()
+      .eq("id", msg.sender_id);
+
+    msg.profiles = data[0];
+    setMessages([...messages, msg]);
+  };
+
   channel.on(
     "postgres_changes",
     {
@@ -60,7 +70,7 @@ const Conversation = () => {
       filter: `room_id=eq.${roomId}`,
     },
     (payload) => {
-      setMessages([...messages, payload.new]);
+      getMessageUserProfile(payload.new)
       scrollToBottom();
     }
   );

@@ -18,7 +18,7 @@ const Message = ({msg}) => {
           />
         ) : (
           <span className="text-2xl font-bold font-popins bg-slate-400 px-2 h-8 w-8 rounded-full flex items-center justify-center border border-teal-600">
-            <p>{msg?.profiles?.username.charAt(0)}</p>
+            <p className='uppercase'>{msg?.profiles?.username.charAt(0)}</p>
           </span>
         )}
 

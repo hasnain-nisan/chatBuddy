@@ -173,6 +173,16 @@ const MessageContainer = () => {
       setMessages(data);
     };
 
+    const getMessageUserProfile = async (msg) => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select()
+        .eq("id", msg.sender_id);
+
+      msg.profiles = data[0];
+      setMessages([...messages, msg]);
+    };
+
     channel.on(
       "postgres_changes",
       {
@@ -182,7 +192,7 @@ const MessageContainer = () => {
         filter: `room_id=eq.${roomId}`,
       },
       (payload) => {
-        setMessages([...messages, payload.new]);
+        getMessageUserProfile(payload.new);
         scrollToBottom();
       }
     );
