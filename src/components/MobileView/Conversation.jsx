@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { BiMenuAltRight } from "react-icons/bi";
 import Input from "./Input";
-import MessageContainer from "./MessageContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedRoom } from "../../redux/actions/conversationAction";
 import Message from "./Message";
@@ -99,7 +98,6 @@ const Conversation = () => {
         />
       </div>
 
-      {/* <MessageContainer /> */}
       <div
         id="msgContainer"
         className="flex flex-col gap-3 overflow-y-scroll h-[90%] px-5 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C] pt-1"

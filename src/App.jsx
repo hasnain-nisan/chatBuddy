@@ -37,9 +37,11 @@ function App() {
         .from("rooms")
         .select()
         .eq("is_private", true)
-        .eq("is_group", true);
+        .eq("is_group", true)
 
-      dispatch(setPrivateRooms(data));
+      let privateRoom = data.filter(data => data.participents.includes(user?.user.id));
+
+      dispatch(setPrivateRooms(privateRoom));
     };
 
   useEffect(() => {
