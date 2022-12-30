@@ -5,6 +5,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import { useSelector } from 'react-redux';
 import { MdOutlineExpandMore } from "react-icons/md";
+import {CgDanger} from 'react-icons/cg'
 
 const Group = () => {
 
@@ -73,9 +74,16 @@ const Group = () => {
             padding: "0px",
           }}
         >
-          {privateRooms?.map((room) => {
-            return <MenuMessage key={room.id} room={room}/>;
-          })}
+          {privateRooms.length > 0 ? (
+            privateRooms?.map((room) => {
+              return <MenuMessage key={room.id} room={room}/>;
+            })) : (
+              <span className='flex items-center justify-start gap-2 px-2'>
+                <CgDanger fontSize={20} className="text-red-500"/>
+                <p className='text-red-500 font-popins text-sm'>No group found</p>
+              </span>
+            )
+          }
         </AccordionDetails>
       </Accordion>
     </div>

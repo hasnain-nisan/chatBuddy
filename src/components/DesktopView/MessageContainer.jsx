@@ -7,7 +7,6 @@ import { BiMenuAltRight } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import NoConvImage from '../../assets/vector1.png'
 import { supabase } from '../../utils/supabase/supabaseClient';
-import ScrollToBottom from "react-scroll-to-bottom";
 
 
 const MessageContainer = () => {

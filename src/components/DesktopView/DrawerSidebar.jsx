@@ -2,7 +2,7 @@ import React from 'react'
 import { IoLogoIonitron } from "react-icons/io";
 import { HiOutlineHome, HiUserGroup, HiChatAlt, HiMenu } from "react-icons/hi";
 import { BiLogOut } from "react-icons/bi";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../../utils/supabase/supabaseClient';
 import { auth } from '../../redux/actions/authAction';
 import { setMenu } from '../../redux/actions/menuAction';
@@ -10,6 +10,9 @@ import { setMenu } from '../../redux/actions/menuAction';
 const DrawerSidebar = () => {
 
   const dispatch = useDispatch();
+
+  const menu = useSelector((state) => state.menuData.selectedMenu);
+
   const signOut = async (e) => {
     const { error } = await supabase.auth.signOut();
     dispatch(auth(null));
@@ -52,7 +55,11 @@ const DrawerSidebar = () => {
             <li>
               <a
                 href="#"
-                class="flex items-center p-2 font-normal text-slate-500 font-popins hover:bg-[#1E1C26] hover:text-teal-600 rounded-md"
+                class={`flex items-center p-2 font-normal font-popins hover:bg-[#1E1C26] hover:text-teal-600 rounded-md ${
+                  menu === "home"
+                    ? "bg-[#1E1C26] text-teal-600"
+                    : "text-slate-500"
+                }`}
               >
                 <HiOutlineHome />
                 <span class="ml-3">Home</span>
@@ -61,7 +68,11 @@ const DrawerSidebar = () => {
             <li>
               <a
                 href="#"
-                class="flex items-center p-2 font-normal text-slate-500 font-popins hover:bg-[#1E1C26] hover:text-teal-600 rounded-md"
+                class={`flex items-center p-2 font-normal font-popins hover:bg-[#1E1C26] hover:text-teal-600 rounded-md ${
+                  menu === "group"
+                    ? "bg-[#1E1C26] text-teal-600"
+                    : "text-slate-500"
+                }`}
                 onClick={() => setSelectedMenu("group")}
               >
                 <HiUserGroup />

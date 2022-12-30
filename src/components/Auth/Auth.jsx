@@ -1,13 +1,22 @@
 import React, {useState} from 'react'
 import { supabase } from '../../utils/supabase/supabaseClient';
 import { auth } from '../../redux/actions/authAction';
-import Logo from '../../assets/chatbuddy.png'
+import {image1, image2, image3, image4, image5} from '../../utils/imageHelper'
 import { useDispatch } from 'react-redux';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade } from "swiper";
+
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/effect-fade";
+
 
 const Auth = () => {
 
   const dispatch = useDispatch();
 
+  const images = [image1, image2, image3, image4, image5]
+  const [slider, setSlider] = useState(null);
   const [formState, setFormState] = useState('login');
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -53,15 +62,52 @@ const Auth = () => {
     }
   }
 
+  const slideChange = () => {
+    const images = document.querySelectorAll('.s-image');
+    slider.slides.forEach((slide, index) => {
+      slide.style.opacity = 0;
+    })
+
+    slider.slides[slider.activeIndex].style.opacity = 1;
+  }
+
   return (
-    <div className="formDiv flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat">
-      {formState === "login" && (
+    <div className="formDiv flex h-screen w-full items-center justify-between bg-[#211F2C] bg-cover bg-no-repeat">
+      <div className="w-full h-full flex items-center justify-center border">
+        <Swiper
+          modules={[Autoplay, EffectFade]}
+          effect={"fade"}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false
+          }}
+          className="w-72"
+          // spaceBetween={50}
+          slidesPerView={1}
+          onSlideChange={slideChange}
+          onSwiper={(swiper) => setSlider(swiper)}
+        >
+          {images.map((image, index) => {
+            return (
+              <SwiperSlide className="flex items-center justify-center h-80 w-80">
+                <img src={image} alt="" srcset="" className="s-image w-full h-full" id={`img_${index}`}/>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+        {/* div
+        <img src={image5} alt="" srcset="" className=""/> */}
+      </div>
+
+      <div className="w-full flex items-center justify-center">
+        <div className="h-72 w-52 bg-red-300"></div>
+      </div>
+
+      {/* {formState === "login" && (
         <div className="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="text-white">
             <div className="mb-8 flex flex-col items-center">
               <img src={Logo} width="250" alt="" srcSet="" />
-              {/* <h1 className="mb-2 text-2xl">Chat Buddy</h1> */}
-              {/* <span className="text-gray-300">Enter Login Details</span> */}
             </div>
             <form action="#">
               <div className="mb-4 text-lg">
@@ -124,8 +170,6 @@ const Auth = () => {
           <div className="text-white">
             <div className="mb-8 flex flex-col items-center">
               <img src={Logo} width="250" alt="" srcSet="" />
-              {/* <h1 className="mb-2 text-2xl">Chat Buddy</h1> */}
-              {/* <span className="text-gray-300">Enter Login Details</span> */}
             </div>
             <form action="#">
               <div className="mb-4 text-lg">
@@ -185,7 +229,7 @@ const Auth = () => {
             </form>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
