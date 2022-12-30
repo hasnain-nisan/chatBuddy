@@ -151,10 +151,23 @@ const MessageContainer = () => {
 
     const scrollToBottom = () => {
       setTimeout(() => {
-        var objDiv = document.getElementById("bottomDivMessage");
-        console.log(objDiv);
-        objDiv.scrollIntoView({ behavior: "smooth" });
-      }, 1000);
+        setMsgContainerHeight();
+        var objDiv = document.getElementById("msgContainerr");
+        objDiv.scrollTo({ top: objDiv.scrollHeight, behavior: "smooth" });
+      }, 1500);
+    };
+
+    const setMsgContainerHeight = () => {
+      var windowHeight = window.innerHeight;
+      var bodyHeight = document.getElementsByTagName("body")[0].clientHeight;
+      var bottomNavigationHeight =
+        document.getElementById("bottom-navigation").clientHeight;
+      var headerHeight = document.getElementById("header").clientHeight;
+      var msgContanerHeight =
+        bodyHeight -
+        (bottomNavigationHeight + headerHeight + bottomNavigationHeight + 30);
+      document.getElementById("msgContainerr").style.height =
+        msgContanerHeight + "px";
     };
 
     const getRoomMessages = async (e) => {
@@ -199,6 +212,10 @@ const MessageContainer = () => {
     channel.subscribe();
 
     useEffect(() => {
+      scrollToBottom();
+    }, [])
+
+    useEffect(() => {
       getRoomMessages();
       scrollToBottom();
     }, [room]);
@@ -235,20 +252,23 @@ const MessageContainer = () => {
               />
             </div>
             <div
-              id="msgContainer"
-              className="flex flex-col gap-3 overflow-y-scroll h-[90%] px-5 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C] pt-1"
+              id="msgContainerr"
+              className="a flex flex-col gap-3 overflow-y-scroll h-[85%] px-5 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C] pt-1"
             >
               {messages.map((msg) => {
-                return <Message key={msg.id} msg={msg}/>
+                return <Message key={msg.id} msg={msg} />;
               })}
-              <div id='bottomDivMessage'></div>
+              <div id="bottomDivMessage"></div>
             </div>
             <Input />
           </>
         ) : (
-          <div className='w-full h-full flex flex-col items-center justify-center'>
-            <img src={NoConvImage} alt="" srcset="" className='object-cover'/>
-            <p className='font-semibold font-popins text-2xl text-teal-700'>No conversation is selected</p>
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <img src={NoConvImage} alt="" srcset="" className="object-cover" />
+            <p className="font-semibold font-popins text-2xl text-teal-700">
+              No conversation is selected
+            </p>
+            <div id="bottomDivMessage"></div>
           </div>
         )}
       </div>
