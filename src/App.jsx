@@ -64,10 +64,10 @@ function App() {
         <div className="w-full h-screen bg-[#211F2C] cursor-pointer group flex flex-row gap-2 justify-center items-center p-5">
           <span className="flex items-center justify-center gap-3 animate-ping">
             <IoLogoIonitron
-              fontSize={50}
+              fontSize={40}
               className="group-hover:text-teal-300 text-teal-400"
             />
-            <h1 className="group-hover:text-teal-300 text-3xl font-popins font-bold text-teal-500">
+            <h1 className="group-hover:text-teal-300 text-2xl font-popins font-bold text-teal-500">
               ChatBuddy
             </h1>
           </span>
