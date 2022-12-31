@@ -1,6 +1,7 @@
 const menuReducer = (
   menuData = {
     selectedMenu: 'home',
+    addModalOpen: false,
   },
   action
 ) => {
@@ -9,6 +10,11 @@ const menuReducer = (
       return {
         ...menuData,
         selectedMenu: action.payload,
+      };
+    case 'SET_ADD_MODAL_OPEN':
+      return {
+        ...menuData,
+        addModalOpen: action.payload,
       };
     default:
       return menuData;

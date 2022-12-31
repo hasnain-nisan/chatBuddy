@@ -4,6 +4,7 @@ import MessageContainer from './MessageContainer'
 import Drawer from "@mui/material/Drawer";
 import DrawerSidebar from './DrawerSidebar';
 import {BsFillCaretRightFill} from 'react-icons/bs'
+import AddModal from './AddModal';
 
 const MenuContainer = () => {
 
@@ -27,6 +28,7 @@ const MenuContainer = () => {
       </button>
       <MessageBar />
       <MessageContainer />
+      <AddModal/>
     </div>
   );
 }

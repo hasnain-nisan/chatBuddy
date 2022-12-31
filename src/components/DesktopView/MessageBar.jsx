@@ -1,12 +1,14 @@
 import React from 'react'
 import { MdSearch } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Group from './Group';
 import { BsPlusCircleFill } from "react-icons/bs";
+import { setAddModalOpen } from "../../redux/actions/menuAction";
 
 const MessageBar = () => {
     const messages = [1, 1, 1, 1, 1, 2, 3, 3, 1, 34, 4, 3,3,3,3,3,3,3];
 
+    const dispatch = useDispatch();
     const menu = useSelector((state) => state.menuData.selectedMenu);
 
     return (
@@ -30,7 +32,10 @@ const MessageBar = () => {
           <div id="msgContainer" className="w-[95%] flex flex-col gap-3 pb-5 ">
             {menu === "group" && <Group />}
           </div>
-          <button className="fixed bottom-20 left-52 cursor-pointer">
+          <button
+            className="fixed bottom-20 left-52 cursor-pointer"
+            onClick={() => dispatch(setAddModalOpen(true))}
+          >
             <BsPlusCircleFill
               fontSize={40}
               className="shadow-md text-teal-800 hover:text-teal-400 hover:shadow-teal-500/50 rounded-full "

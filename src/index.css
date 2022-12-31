@@ -3,3 +3,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* CHECKBOX TOGGLE SWITCH */
+/* @apply rules for documentation, these do not work as inline style */
+.toggle-checkbox {
+  /* @apply: right-0 border-green-400; */
+  /* right: 0; */
+  border-color: rgb(15, 118,110);
+}
+.toggle-checkbox:checked {
+  @apply: right-0 border-green-400;
+  right: 0;
+  border-color: rgb(20 184 166);
+}
+.toggle-checkbox:checked + .toggle-label {
+  @apply: bg-teal-400;
+  background-color: rgb(20 184 166);
+}
