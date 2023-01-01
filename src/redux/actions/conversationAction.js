@@ -30,3 +30,14 @@ export const setSelectedRoom = (data) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const setAllUsers = (data) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "SET_ALL_USERS",
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

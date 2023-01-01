@@ -8,6 +8,7 @@ import { IoLogoIonitron } from "react-icons/io";
 import {
   setPublicRooms,
   setPrivateRooms,
+  setAllUsers,
 } from "./redux/actions/conversationAction";
 import MobileView from './components/MobileView/MobileView'
 import DesktopView from './components/DesktopView/DesktopView'
@@ -37,21 +38,34 @@ function App() {
     dispatch(setPublicRooms(data));
   }
 
-    const getPrivateRooms = async (e) => {
-      const { data, error } = await supabase
-        .from("rooms")
-        .select()
-        .eq("is_private", true)
-        .eq("is_group", true)
+  const getPrivateRooms = async (e) => {
+    const { data, error } = await supabase
+      .from("rooms")
+      .select()
+      .eq("is_private", true)
+      .eq("is_group", true)
 
-      let privateRoom = data.filter(data => data.participents.includes(user?.user.id));
+    let privateRoom = data.filter(data => data.participents.includes(user?.user.id));
 
-      dispatch(setPrivateRooms(privateRoom));
-    };
+    dispatch(setPrivateRooms(privateRoom));
+  };
+
+  const getAllUsers = async (e) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select();
+
+    let allUsers = data.filter((data) =>
+      data.id != user?.user.id
+    );
+
+    dispatch(setAllUsers(allUsers));    
+  };
 
   useEffect(() => {
     getSession();
-  }, [])
+    getAllUsers();
+  }, [user])
 
   useEffect(() => {
     getPublicRooms()

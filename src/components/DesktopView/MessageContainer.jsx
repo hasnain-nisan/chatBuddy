@@ -165,7 +165,7 @@ const MessageContainer = () => {
       var headerHeight = document.getElementById("header").clientHeight;
       var msgContanerHeight =
         bodyHeight -
-        (bottomNavigationHeight + headerHeight + bottomNavigationHeight + 30);
+        (bottomNavigationHeight + headerHeight + bottomNavigationHeight + 50);
       document.getElementById("msgContainerr").style.height =
         msgContanerHeight + "px";
     };

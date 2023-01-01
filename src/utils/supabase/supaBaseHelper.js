@@ -23,4 +23,13 @@ const createRoom = async (data) => {
         .insert(data)
 };
 
-export { getUser, getSession, signOut };
+const getAllUsers = async (e) => {
+  const { data, error } = await supabase
+    .from("rooms")
+    .select()
+    .eq("is_private", true)
+    .eq("is_group", true);
+  return data;
+};
+
+export { getUser, getSession, signOut, getAllUsers };

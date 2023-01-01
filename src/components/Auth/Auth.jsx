@@ -34,7 +34,7 @@ const Auth = () => {
   }
 
   const signIn = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
@@ -48,7 +48,7 @@ const Auth = () => {
   }
 
   const signUp = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
@@ -66,9 +66,9 @@ const Auth = () => {
     }
   }
 
-  const formSubmit = () => {
-    formState === 'login' && signIn();
-    formState === 'register' && signUp();
+  const formSubmit = (e) => {
+    formState === 'login' && signIn(e);
+    formState === 'register' && signUp(e);
   }
 
   const slideChange = () => {
@@ -155,7 +155,7 @@ const Auth = () => {
                 <button
                   type="submit"
                   className="inline-block px-7 py-2 font-popins bg-teal-700 text-gray-900 text-sm leading-snug uppercase rounded shadow-md shadow-gray-900 hover:bg-teal-400 hover:shadow-lg focus:bg-teal-400 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-400 active:shadow-lg transition duration-150 ease-in-out"
-                  onClick={formSubmit}
+                  onClick={(e) => formSubmit(e)}
                 >
                   {formState === "login" && "Login"}
                   {formState === "register" && "Register"}

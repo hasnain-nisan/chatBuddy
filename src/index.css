@@ -20,3 +20,15 @@
   @apply: bg-teal-400;
   background-color: rgb(20 184 166);
 }
+
+.css-1jqq78o-placeholder {
+    color: rgb(15, 118,110) !important;
+}
+
+.css-1r06g8j-control:hover {
+  border-color: rgb(20 184 166) !important;
+}
+
+.css-1osv7dz-control:hover {
+  border-color: rgb(20 184 166) !important;
+}
