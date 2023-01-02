@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -7,7 +7,12 @@ import {useSelector, useDispatch} from 'react-redux'
 import { setAddModalOpen } from "../../redux/actions/menuAction";
 import {MdCancel} from 'react-icons/md'
 import {FiUploadCloud} from 'react-icons/fi'
-import Select from 'react-select';
+import { Select, CaretIcon, ModalCloseButton} from 'react-responsive-select';
+import 'react-responsive-select/dist/react-responsive-select.css';
+import { toast } from 'react-toastify';
+import { supabase } from "../../utils/supabase/supabaseClient";
+import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 
 const style = {
   position: "absolute",
@@ -22,92 +27,56 @@ const style = {
   p: 5,
 };
 
-
 const AddModal = () => {
 
   const dispatch = useDispatch();
   const [image, setImage] = useState(false)
   const [groupName, setGroupName] = useState("")
   const [participentsValue, setParticipentsValue] = useState([]);
+  const [message, setMessage] = useState("");
   const [isPrivateGroup, setIsPrivateGroup] = useState(false);
   const addModalOpen = useSelector((state) => state.menuData.addModalOpen)
   const menu = useSelector((state) => state.menuData.selectedMenu);
+  const user = useSelector((state) => state.authData.session);
   const allUsers = useSelector((state) => state.conversationData.all_users);
-  
-  // const participentsValue = [
-  //   { value: 'chocolate', label: `<div>sd</div>` },
-  //   { value: 'strawberry', label: 'Strawberry' },
-  //   { value: 'vanilla', label: 'Vanilla' }
-  // ]
 
-  const setUserAsOptions = () => {
-    let modUsers = [];
-    allUsers.forEach((user) => {
+  const setMultiSelectOptions = () => {
+    let modUsers = [{
+      value: null,
+      text: "Not selected",
+      markup: <div class="flex justify-start items-center gap-3 bg-[#1E1C26]">
+          <p className="text-red-700 font-popins">Select one</p>
+        </div>
+    }];
+    allUsers?.forEach((user) => {
       let data = {
         value: user.id,
-        label: user.username
+        text: user.username,
+        markup: <div class="flex justify-start items-center gap-3 bg-[#1E1C26]">
+          {user?.avatarurl ? (
+            <img
+              class="rounded-full items-start flex-shrink-0 object-cover"
+              src="https://res.cloudinary.com/dc6deairt/image/upload/v1638102932/user-32-01_pfck4u.jpg"
+              width="45"
+              height="45"
+              alt="Marie Zulfikar"
+            />
+          ) : (
+            <span className="text-2xl font-bold font-popins bg-slate-400 px-2 h-8 w-8 rounded-full flex items-center justify-center border border-teal-600">
+              <p className='uppercase'>{user?.username.charAt(0)}</p>
+            </span>
+          )}
+          <div>
+            <h4 class="text-[15px] font-semibold font-popins text-teal-700 hover:text-teal-500">
+              {user?.username}
+            </h4>
+          </div>
+        </div>
       }
+      modUsers.push(data);
     })
+    setParticipentsValue(modUsers)
   }
-
-  const colourStyles = {
-    control: (styles) => ({ 
-      ...styles, 
-      backgroundColor: 'tranparent' ,
-      border: `1px solid rgb(15 118 110)`,
-      fontFamily: 'Poppins, sans-serif',
-      text: 'rgb(15 118 110)'
-    }),
-    // option: (styles, { data, isDisabled, isFocused, isSelected }) => {
-    //   const color = chroma(data.color);
-    //   return {
-    //     ...styles,
-    //     backgroundColor: isDisabled
-    //       ? undefined
-    //       : isSelected
-    //       ? data.color
-    //       : isFocused
-    //       ? color.alpha(0.1).css()
-    //       : undefined,
-    //     color: isDisabled
-    //       ? '#ccc'
-    //       : isSelected
-    //       ? chroma.contrast(color, 'white') > 2
-    //         ? 'white'
-    //         : 'black'
-    //       : data.color,
-    //     cursor: isDisabled ? 'not-allowed' : 'default',
-
-    //     ':active': {
-    //       ...styles[':active'],
-    //       backgroundColor: !isDisabled
-    //         ? isSelected
-    //           ? data.color
-    //           : color.alpha(0.3).css()
-    //         : undefined,
-    //     },
-    //   };
-    // },
-    // multiValue: (styles, { data }) => {
-    //   const color = chroma(data.color);
-    //   return {
-    //     ...styles,
-    //     backgroundColor: color.alpha(0.1).css(),
-    //   };
-    // },
-    // multiValueLabel: (styles, { data }) => ({
-    //   ...styles,
-    //   color: data.color,
-    // }),
-    // multiValueRemove: (styles, { data }) => ({
-    //   ...styles,
-    //   color: data.color,
-    //   ':hover': {
-    //     backgroundColor: data.color,
-    //     color: 'white',
-    //   },
-    // }),
-  };
 
   const uploadFile = () => {
     let fileInput = document.getElementById('imageInput');
@@ -126,6 +95,50 @@ const AddModal = () => {
       reader.readAsDataURL(input.files[0]);
     }
   }
+
+  const createConversation = async (selectedParticipent) => {
+    const conversation = {
+      id: uuidv4(),
+      name: "Single conversation",
+      created_at: moment().format(),
+      is_group: false,
+      is_private: true,
+      participents: [
+        user?.user.id,
+        selectedParticipent 
+      ]
+    };
+
+    const { error } = await supabase
+    .from('rooms')
+    .insert(conversation);
+
+    return error;
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    if(menu === "home"){
+      let selectedParticipent = document.getElementsByName('selectBox')[0].value;
+      if(!selectedParticipent){
+        toast.error('Must select a participent')
+      } else if(message === "") {
+         toast.error('Message can not be empty')
+      }
+
+      let res = await createConversation(selectedParticipent);
+
+      if(res){
+        toast.error('Something went wrong')
+      } else {
+        toast.success('Converation created')
+      }
+    }
+  }
+
+  useEffect(() => {
+    setMultiSelectOptions()
+  }, [addModalOpen])
   
   return (
     <div>
@@ -197,25 +210,20 @@ const AddModal = () => {
 
               <div class="w-full">
                 <Select
-                  defaultValue={""}
-                  isMulti={menu === "home" ? false : true}
-                  name="colors"
+                  className="bg-transparent"
+                  name="selectBox"
+                  multiselect={menu === 'home' ? false : true}
+                  modalCloseButton={<ModalCloseButton />}
                   options={participentsValue}
-                  className=""
-                  placeholder={
+                  // options={op}
+                  caretIcon={<CaretIcon />}
+                  prefix={
                     menu === "home"
-                      ? "Select a user"
-                      : "Select group participents"
+                      ? "User: "
+                      : "Group participents: "
                   }
-                  classNamePrefix="select pa"
-                  styles={colourStyles}
+                  onSubmit={() => console.log('onSubmit')}
                 />
-                {/* <input
-                  class="text-sm placeholder:text-sm font-popins placeholder:font-popins placeholder:text-teal-700 bg-transparent border-teal-700 hover:border-teal-500 hover:text-teal-500 hover:placeholder:text-teal-500 shadow appearance-none border rounded w-full py-2 px-3 text-teal-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="username"
-                  type="text"
-                  placeholder="Group Name"
-                /> */}
               </div>
 
               <div className="w-full">
@@ -226,6 +234,8 @@ const AddModal = () => {
                   rows="5"
                   className="w-full rounded bg-transparent border border-teal-700 hover:border-teal-500 px-4 py-2 placeholder:text-teal-700 placeholder:font-popins placeholder:hover:text-teal-500 font-popins text-teal-700 hover:text-teal-500 focus-within:border-teal-500 focus-visible:border-teal-500"
                   placeholder="Enter message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                 ></textarea>
               </div>
 
@@ -256,7 +266,9 @@ const AddModal = () => {
               )}
 
               <div className="w-full">
-                <button className="font-popins text-sm bg-teal-700 p-2 rounded-md text-[#1E1C26] hover:bg-teal-500">
+                <button className="font-popins text-sm bg-teal-700 p-2 rounded-md text-[#1E1C26] hover:bg-teal-500"
+                  onClick={(e) => handleFormSubmit(e)}
+                >
                   Create
                 </button>
               </div>

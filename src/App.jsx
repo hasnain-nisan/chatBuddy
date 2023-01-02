@@ -12,6 +12,8 @@ import {
 } from "./redux/actions/conversationAction";
 import MobileView from './components/MobileView/MobileView'
 import DesktopView from './components/DesktopView/DesktopView'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
     setTimeout(() => {
       setLoading(false)
     }, 2000)
+
+    getAllUsers(data?.session?.user);
   };
 
   const getPublicRooms = async (e) => {
@@ -50,22 +54,23 @@ function App() {
     dispatch(setPrivateRooms(privateRoom));
   };
 
-  const getAllUsers = async (e) => {
+  const getAllUsers = async (user) => {
     const { data, error } = await supabase
       .from("profiles")
       .select();
 
-    let allUsers = data.filter((data) =>
-      data.id != user?.user.id
-    );
+    setTimeout(() => {
+      let allUsers = data.filter((data) =>
+      data.id != user?.id
+      );
+      dispatch(setAllUsers(allUsers));
+    }, 1000)
 
-    dispatch(setAllUsers(allUsers));    
   };
 
   useEffect(() => {
     getSession();
-    getAllUsers();
-  }, [user])
+  }, [])
 
   useEffect(() => {
     getPublicRooms()
@@ -94,6 +99,18 @@ function App() {
       ) : (
         <Auth />
       )}
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }

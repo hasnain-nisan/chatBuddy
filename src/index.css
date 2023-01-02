@@ -21,14 +21,42 @@
   background-color: rgb(20 184 166);
 }
 
-.css-1jqq78o-placeholder {
-    color: rgb(15, 118,110) !important;
+.rrs__button {
+  background: transparent;
+  box-shadow: none;
+  border-color: rgb(15, 118,110) !important;;
 }
 
-.css-1r06g8j-control:hover {
-  border-color: rgb(20 184 166) !important;
+.rrs__label {
+  @apply font-popins text-teal-700;
+  border: 1px solid rgb(15, 118,110) !important;
 }
 
-.css-1osv7dz-control:hover {
-  border-color: rgb(20 184 166) !important;
+.rrs__label:hover {
+  @apply font-popins text-teal-500;
+  border: 1px solid rgb(20 184 166) !important;
+}
+
+.rrs .caret-icon {
+  @apply fill-teal-600;
+}
+
+.rrs--has-changed .rrs__label {
+  @apply font-popins text-teal-700;
+}
+
+.rrs__option:hover {
+  @apply bg-[#1E1C26] text-[#1E1C26]
+}
+
+.rrs__button + .rrs__options {
+  @apply bg-[#1E1C26] border-teal-700
+}
+
+.rrs__option:focus {
+    outline: 1px solid rgb(15, 118,110);
+}
+
+.rrs__option.rrs__option--next-selection {
+  @apply bg-[#1E1C26]
 }
