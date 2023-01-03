@@ -42,6 +42,7 @@ const Auth = () => {
     });
 
     if(error){
+      console.log('Login');
       toast.error(error.message);
     } else {
       dispatch(auth(data.session));
