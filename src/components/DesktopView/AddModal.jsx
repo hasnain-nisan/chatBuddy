@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { supabase } from "../../utils/supabase/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import { setSelectedRoom } from "../../redux/actions/conversationAction";
 
 const style = {
   position: "absolute",
@@ -113,8 +114,23 @@ const AddModal = () => {
     .from('rooms')
     .insert(conversation);
 
-    return error;
+    return {
+      error, 
+      conversation
+    };
   }
+
+  const sendMessage = async (data) => {
+    const msg = {
+      id: uuidv4(),
+      message: message,
+      sender_id: user.user.id,
+      room_id: data.id,
+      created_at: moment().format(),
+    };
+    const { error } = await supabase.from("messages").insert(msg);
+    setMessage("");
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -128,9 +144,12 @@ const AddModal = () => {
 
       let res = await createConversation(selectedParticipent);
 
-      if(res){
+      if(res.error){
         toast.error('Something went wrong')
       } else {
+        await sendMessage(res.conversation)
+        dispatch(setAddModalOpen(false))
+        dispatch(setSelectedRoom(res.conversation))
         toast.success('Converation created')
       }
     }

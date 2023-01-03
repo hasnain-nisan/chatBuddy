@@ -9,6 +9,7 @@ import {
   setPublicRooms,
   setPrivateRooms,
   setAllUsers,
+  setSingleConversations,
 } from "./redux/actions/conversationAction";
 import MobileView from './components/MobileView/MobileView'
 import DesktopView from './components/DesktopView/DesktopView'
@@ -21,6 +22,10 @@ function App() {
   const [loading, setLoading] = useState(true)
   const user = useSelector((state) => state.authData.session);
   const menu = useSelector((state) => state.menuData.selectedMenu);
+  const addModalOpen = useSelector((state) => state.menuData.addModalOpen)
+  const singleConversations = useSelector(
+    (state) => state.conversationData.single_conversations
+  );
 
   const getSession = async (e) => {
     const { data, error } = await supabase.auth.getSession();
@@ -30,6 +35,7 @@ function App() {
     }, 2000)
 
     getAllUsers(data?.session?.user);
+    getSingleConversations(data?.session?.user);
   };
 
   const getPublicRooms = async (e) => {
@@ -54,6 +60,18 @@ function App() {
     dispatch(setPrivateRooms(privateRoom));
   };
 
+  const getSingleConversations = async (user) => {
+    const { data, error } = await supabase
+      .from("rooms")
+      .select()
+      .eq("is_private", true)
+      .eq("is_group", false)
+
+    let singleConversations = data.filter(data => data.participents.includes(user?.id));
+
+    dispatch(setSingleConversations(singleConversations));
+  };
+
   const getAllUsers = async (user) => {
     const { data, error } = await supabase
       .from("profiles")
@@ -61,21 +79,35 @@ function App() {
 
     setTimeout(() => {
       let allUsers = data.filter((data) =>
-      data.id != user?.id
+        data.id != user?.id
       );
-      dispatch(setAllUsers(allUsers));
-    }, 1000)
+
+      let conversation_user_id = [];
+      singleConversations.forEach(conversation => {
+        conversation.participents.forEach(participent => {
+          if(participent !== user?.id){
+            conversation_user_id.push(participent)
+          }
+        })
+      })
+
+      let filtered_users = allUsers.filter(data => !conversation_user_id.includes(data.id));
+      dispatch(setAllUsers(filtered_users));
+    }, 100)
 
   };
 
   useEffect(() => {
     getSession();
+    getSingleConversations();
   }, [])
 
   useEffect(() => {
+    getSession();
     getPublicRooms()
     getPrivateRooms()
-  }, [menu])
+    getSingleConversations();
+  }, [menu, addModalOpen])
 
   return (
     <div>

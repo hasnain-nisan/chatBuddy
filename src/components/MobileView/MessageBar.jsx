@@ -4,6 +4,7 @@ import { GoSettings } from 'react-icons/go';
 import { MdSearch } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import Group from '../DesktopView/Group';
+import Home from '../DesktopView/Home';
 
 const MessageBar = () => {
 
@@ -43,6 +44,7 @@ const MessageBar = () => {
           id="msgContainer"
           className="flex flex-col gap-2 pb-5 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C]"
         >
+          {menu === "home" && <Home/>}
           {menu === "group" && <Group />}
         </div>
 

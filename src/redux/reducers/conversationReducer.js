@@ -2,6 +2,7 @@ const conversationReducer = (
   conversationData = {
     public_rooms: null,
     private_rooms: null,
+    single_conversations: null,
     selected_room: null,
     all_users: null,
   },
@@ -22,6 +23,11 @@ const conversationReducer = (
       return {
         ...conversationData,
         selected_room: action.payload,
+      };
+    case "SET_SINGLE_CONVERSATIONS":
+      return {
+        ...conversationData,
+        single_conversations: action.payload,
       };
     case "SET_ALL_USERS":
       return {

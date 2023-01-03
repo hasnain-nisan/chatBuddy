@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Group from './Group';
 import { BsPlusCircleFill } from "react-icons/bs";
 import { setAddModalOpen } from "../../redux/actions/menuAction";
+import Home from './Home';
 
 const MessageBar = () => {
     const messages = [1, 1, 1, 1, 1, 2, 3, 3, 1, 34, 4, 3,3,3,3,3,3,3];
@@ -30,6 +31,7 @@ const MessageBar = () => {
 
         <div className="w-full h-[95%] scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-[#211F2C] rounded-md">
           <div id="msgContainer" className="w-[95%] flex flex-col gap-3 pb-5 ">
+            {menu === "home" && <Home/>}
             {menu === "group" && <Group />}
           </div>
           <button

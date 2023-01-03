@@ -31,6 +31,17 @@ export const setSelectedRoom = (data) => async (dispatch) => {
   }
 };
 
+export const setSingleConversations = (data) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "SET_SINGLE_CONVERSATIONS",
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const setAllUsers = (data) => async (dispatch) => {
   try {
     dispatch({
