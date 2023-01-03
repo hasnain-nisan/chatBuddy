@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { IoLogoIonitron } from "react-icons/io";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper";
-import bgImage from '../../assets/11.png'
+import loginImage from '../../assets/login1.png'
+import { toast } from 'react-toastify';
 
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -41,9 +42,10 @@ const Auth = () => {
     });
 
     if(error){
-      console.log(error.message);
+      toast.error(error.message);
     } else {
       dispatch(auth(data.session));
+      toast.success('Login successfull');
     }
   }
 
@@ -60,9 +62,10 @@ const Auth = () => {
     });
     
     if (error) {
-      console.log(error.message);
+      toast.error(error.message);
     } else {
       dispatch(auth(data.session));
+      toast.success('Account created')
     }
   }
 
@@ -84,10 +87,10 @@ const Auth = () => {
     <section className="h-screen w-full bg-[#211F2C] md:p-10">
       <div className="px-6 h-full text-gray-800">
         <div className="flex  flex-col md:flex-row xl:justify-center lg:justify-between justify-center items-center h-full gap-10">
-          <div className="hidden md:block max-w-lg grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-6/12 md:mb-0">
+          <div className="hidden md:block max-w-lg grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-[40%] md:w-6/12 md:mb-0">
             <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-              className="w-full"
+              src={loginImage}
+              className="w-full lg:scale-150"
               alt="Sample image"
             />
           </div>
