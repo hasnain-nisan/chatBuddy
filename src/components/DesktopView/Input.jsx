@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 import { HiOutlinePaperClip } from 'react-icons/hi';
@@ -6,26 +6,46 @@ import { MdEmojiEmotions } from 'react-icons/md';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 import { supabase } from '../../utils/supabase/supabaseClient';
+import { toast } from 'react-toastify';
 
 const Input = () => {
 
+  const inputField = useRef();
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.authData.session);
   const selected_room = useSelector(
     (state) => state.conversationData.selected_room
   );
 
-  const sendMessage = async () => {
-    const msg = {
-      id: uuidv4(),
-      message: message,
-      sender_id: user.user.id,
-      room_id: selected_room.id,
-      created_at: moment().format(),
-    };
-    const { error } = await supabase.from("messages").insert(msg);
-    setMessage("");
+  const sendMessage = async (message) => {
+    if(message === ""){
+      toast.error('Message can not be empty')
+    } else {
+      const msg = {
+        id: uuidv4(),
+        message: message,
+        sender_id: user.user.id,
+        room_id: selected_room.id,
+        created_at: moment().format(),
+      };
+      const { error } = await supabase.from("messages").insert(msg);
+      setMessage("");
+    }
   };
+
+  const keyDownHandler = event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        if (document.activeElement === inputField.current) {
+          let msg = inputField.current.value
+          sendMessage(msg)
+        }
+      }
+    };
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyDownHandler);
+  }, [])
 
   return (
     <section
@@ -41,6 +61,7 @@ const Input = () => {
           id="search"
           placeholder="Type something.."
           autocomplete="off"
+          ref={inputField}
         />
         <div class="flex justify-between items-center h-full w-20 text-teal-700 pr-2">
           <MdEmojiEmotions fontSize={18} />
@@ -48,7 +69,7 @@ const Input = () => {
           <RiSendPlaneFill
             fontSize={18}
             className="cursor-pointer"
-            onClick={sendMessage}
+            onClick={() => sendMessage(message)}
           />
         </div>
       </div>
