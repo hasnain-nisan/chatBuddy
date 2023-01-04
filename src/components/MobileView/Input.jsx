@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   HiChatAlt,
   HiMenu,
@@ -10,27 +10,47 @@ import {
 import { MdEmojiEmotions, MdSearch } from "react-icons/md";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../../utils/supabase/supabaseClient";
 
 const Input = () => {
+  const inputField = useRef();
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.authData.session);
   const selected_room = useSelector(
     (state) => state.conversationData.selected_room
   );
 
-  const sendMessage = async () => {
-    const msg = {
-      id: uuidv4(),
-      message: message,
-      sender_id: user.user.id,
-      room_id: selected_room.id,
-      created_at: moment().format(),
-    };
-    const { error } = await supabase.from("messages").insert(msg);
-    setMessage("");
+  const sendMessage = async (message) => {
+    if(message === ""){
+      toast.error('Message can not be empty')
+    } else {
+      const msg = {
+        id: uuidv4(),
+        message: message,
+        sender_id: user.user.id,
+        room_id: selected_room.id,
+        created_at: moment().format(),
+      };
+      const { error } = await supabase.from("messages").insert(msg);
+      setMessage("");
+    }
   };
+
+  const keyDownHandler = event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+        if (document.activeElement === inputField.current) {
+          let msg = inputField.current.value
+          sendMessage(msg)
+        }
+      }
+    };
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyDownHandler);
+  }, [])
 
   return (
     <section className="block fixed inset-x-0 bottom-0 z-10 bg-[#252331] shadow px-5 py-3">
@@ -50,7 +70,7 @@ const Input = () => {
           <RiSendPlaneFill
             fontSize={18}
             className="cursor-pointer"
-            onClick={sendMessage}
+            onClick={() => sendMessage(message)}
           />
         </div>
       </div>
