@@ -10,7 +10,7 @@ const MenuMessage = ({room}) => {
   return (
     <div>
       <div
-        class="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50 cursor-pointer bg-[#252331] rounded-md p-3"
+        class="mb-3 w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50 cursor-pointer bg-[#252331] rounded-md p-3"
         onClick={() => dispatch(setSelectedRoom(room))}
       >
         <div class="flex justify-start items-center gap-3">

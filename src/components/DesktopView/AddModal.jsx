@@ -14,16 +14,18 @@ import { supabase } from "../../utils/supabase/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import { setSelectedRoom } from "../../redux/actions/conversationAction";
+import { rgbToHex } from "@mui/material";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: window.innerWidth > 768 ? 500 : window.innerWidth,
+  height: window.innerWidth > 768 && "100%",
   borderRadius: 5,
-  bgcolor: "#1E1C26",
-  border: "1px solid rgb(17 94 89)",
+  bgcolor:window.innerWidth > 768 ? "#1E1C26" : "rgb(37, 35, 49)",
+  border: window.innerWidth > 768 && "1px solid rgb(17 94 89)",
   boxShadow: 24,
   p: 5,
 };
@@ -160,6 +162,7 @@ const AddModal = () => {
   }, [addModalOpen])
   
   return (
+    
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
@@ -167,7 +170,7 @@ const AddModal = () => {
         onClose={() => dispatch(setAddModalOpen(false))}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        className="hidden md:block"
+        className=""
       >
         <Box sx={style}>
           <MdCancel

@@ -2,12 +2,14 @@ import React from 'react'
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { GoSettings } from 'react-icons/go';
 import { MdSearch } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAddModalOpen } from '../../redux/actions/menuAction';
 import Group from '../DesktopView/Group';
 import Home from '../DesktopView/Home';
 
 const MessageBar = () => {
 
+    const dispatch = useDispatch();
     const menu = useSelector((state) => state.menuData.selectedMenu)
 
     return (
@@ -48,7 +50,9 @@ const MessageBar = () => {
           {menu === "group" && <Group />}
         </div>
 
-        <button className="text-teal-500 fixed bottom-20 right-5 cursor-pointer">
+        <button className="text-teal-500 fixed bottom-20 right-5 cursor-pointer"
+          onClick={() => dispatch(setAddModalOpen(true))}
+        >
           <BsPlusCircleFill
             fontSize={40}
             className="shadow-md shadow-teal-500/50 rounded-full"

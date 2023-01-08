@@ -18,6 +18,7 @@ import Picker from '@emoji-mart/react'
 
 const Input = () => {
   const inputField = useRef();
+  const [showEmojis, setShowEmojis] = useState(false)
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.authData.session);
   const selected_room = useSelector(
@@ -50,13 +51,28 @@ const Input = () => {
       }
     };
 
+  const addEmoji = (e) => {
+    let sym = e.unified.split("-");
+    let codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codesArray);
+    setMessage(message + emoji);
+  };
+
   useEffect(() => {
     document.addEventListener('keydown', keyDownHandler);
   }, [])
 
   return (
     <section className="block fixed inset-x-0 bottom-0 z-10 bg-[#252331] shadow px-5 py-3">
-      <Picker data={data} onEmojiSelect={console.log} />
+      <div className='absolute bottom-16 right-6'>
+        {showEmojis && (
+          <Picker data={data} 
+            onEmojiSelect={addEmoji}                     
+            theme="dark"
+          />
+        )}
+      </div>
       <div class="relative flex justify-between items-center w-full h-10 px-4 rounded-lg bg-[#1E1C26] overflow-hidden">
         <input
           class="peer h-full w-3/5 outline-none text-sm text-teal-700 pl-3 bg-[#1E1C26] placeholder:text-teal-700 placeholder:text-sm"
@@ -68,7 +84,10 @@ const Input = () => {
           onChange={(e) => setMessage(e.target.value)}
         />
         <div class="flex justify-between items-center h-full w-20 text-teal-700 pr-2">
-          <MdEmojiEmotions fontSize={18} />
+          <MdEmojiEmotions fontSize={18}
+            className="cursor-pointer"
+            onClick={() => setShowEmojis(!showEmojis)}
+          />
           <HiOutlinePaperClip fontSize={18} />
           <RiSendPlaneFill
             fontSize={18}

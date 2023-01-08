@@ -46,14 +46,14 @@ const BottomNavigationBar = () => {
         >
           <HiUserGroup fontSize={22} className="inline-block mb-1" />
         </a>
-        <a
+        {/* <a
           href="#"
           className={`w-full hover:text-teal-400 flex justify-center items-center text-center pt-2 pb-1 ${
             menu === "chat" ? "text-teal-400" : "text-teal-800"
           }`}
         >
           <HiChatAlt fontSize={22} className="inline-block mb-1" />
-        </a>
+        </a> */}
         <a
           href="#"
           className="w-full text-teal-800 hover:text-teal-400 flex justify-center items-center text-center pt-2 pb-1"
